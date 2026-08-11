@@ -10,14 +10,18 @@ class IdeData:
     name: str
     config_prefixes: [str]
     launcher_prefixes: List[str]
+    app_dirs: List[str]
     custom_config_key: str | None
     recent_projects_file: str
 
+    # pylint: disable=too-many-arguments
     def __init__(self, name: str, config_prefixes: [str], launcher_prefixes: List[str],
-                 custom_config_key: str | None = None, recent_projects_file: str = "recentProjects.xml") -> None:
+                 app_dirs: List[str] | None = None, custom_config_key: str | None = None,
+                 recent_projects_file: str = "recentProjects.xml") -> None:
         super().__init__()
         self.name = name
         self.config_prefixes = config_prefixes
         self.launcher_prefixes = launcher_prefixes
+        self.app_dirs = app_dirs if app_dirs is not None else []
         self.custom_config_key = custom_config_key
         self.recent_projects_file = recent_projects_file

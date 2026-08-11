@@ -86,9 +86,9 @@ following:
 4. Check `Generate shell scripts` checkbox
 5. Enter the shell scripts location
 
-> **PHPStorm Light:** Toolbox names its script `phpstorm2` when regular PHPStorm is also
-> installed. Open the tool's settings in Toolbox and set `Shell script name` to `phpstorm-light`,
-> otherwise the extension won't find the launcher.
+> **Note:** When two installed IDEs share a script name, Toolbox numbers the second one
+> (e.g. `phpstorm2` for PHPStorm Light next to PHPStorm). The extension resolves those by reading
+> which Toolbox app directory the script points at, so no renaming is needed.
 
 After that, follow below instructions to configure the extension settings:
 
@@ -109,6 +109,8 @@ make link
 ```
 
 The `make link` command will symlink the project into the ulauncher extensions folder.
+
+Run the test suite with `make test`.
 
 To see your changes, stop ulauncher and run it from the command line with: `make dev`.
 

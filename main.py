@@ -15,6 +15,7 @@ from data.IdeProject import IdeProject
 from events.KeywordQueryEventListener import KeywordQueryEventListener
 from events.PreferencesEventListener import PreferencesEventListener
 from events.PreferencesUpdateEventListener import PreferencesUpdateEventListener
+from utils.LauncherScripts import LauncherScripts
 from utils.RecentProjectsParser import RecentProjectsParser
 
 
@@ -25,9 +26,10 @@ class JetbrainsLauncherExtension(Extension):
         "idea": IdeData(name="IntelliJ IDEA", config_prefixes=["IntelliJIdea", "IdeaIC"],
                         launcher_prefixes=["idea"]),
         "phpstorm": IdeData(name="PHPStorm", config_prefixes=["PhpStorm"],
-                            launcher_prefixes=["phpstorm", "pstorm"]),
+                            launcher_prefixes=["phpstorm", "pstorm"], app_dirs=["phpstorm"]),
         "phpstorm-light": IdeData(name="PHPStorm Light", config_prefixes=["PhpStormLight"],
-                                  launcher_prefixes=["phpstorm-light"]),
+                                  launcher_prefixes=["phpstorm-light"],
+                                  app_dirs=["phpstorm-light"]),
         "pycharm": IdeData(name="PyCharm", config_prefixes=["PyCharm", "PyCharmCE"],
                            launcher_prefixes=["pycharm", "charm"]),
         "rider": IdeData(name="Rider", config_prefixes=["Rider"], launcher_prefixes=["rider"],
@@ -205,12 +207,11 @@ class JetbrainsLauncherExtension(Extension):
         if ide_data is None:
             raise AttributeError("Invalid ide key specified")
 
-        for prefix in ide_data.launcher_prefixes:
-            path = os.path.join(os.path.expanduser(scripts_path), prefix)
-            if path is not None and os.path.isfile(path):
-                return path
-
-        return None
+        return LauncherScripts.find(
+            os.path.expanduser(scripts_path),
+            ide_data.launcher_prefixes,
+            ide_data.app_dirs
+        )
 
 
 if __name__ == "__main__":

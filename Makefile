@@ -2,7 +2,7 @@ PORT_REGEX := ^[0-9]+([.][0-9]+)?$
 EXT_NAME:=com.github.zakuciael.ulauncher-jetbrains-reloaded
 EXT_DIR:=$(shell pwd)
 
-.PHONY: help link unlink deps start dev
+.PHONY: help link unlink deps test start dev
 .DEFAULT_GOAL := help
 
 link: ## Symlink the project source directory with Ulauncher extensions dir.
@@ -10,6 +10,9 @@ link: ## Symlink the project source directory with Ulauncher extensions dir.
 
 unlink: ## Unlink extension from Ulauncher
 	@rm -r ~/.local/share/ulauncher/extensions/${EXT_NAME}
+
+test: ## Run the test suite
+	@python3 -m pytest
 
 deps: ## Install Python Dependencies
 	@pip install -r requirements.txt

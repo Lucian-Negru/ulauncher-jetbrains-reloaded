@@ -30,7 +30,7 @@ class LauncherScripts:
     def find_by_app_dir(scripts_path: str, app_dirs: List[str]) -> str | None:
         """
         Finds the launcher script pointing at one of the given Toolbox app directories,
-        which is how Toolbox distinguishes IDEs sharing a script name
+        which is what tells apart IDEs whose scripts Toolbox had to number
         :param scripts_path: Path to the shell scripts directory
         :param app_dirs: Toolbox app directory names of the IDE
         :return: Path to the launcher script
@@ -50,7 +50,7 @@ class LauncherScripts:
             except (OSError, UnicodeDecodeError):
                 continue
 
-            if any(f"/apps/{app_dir}/" in content for app_dir in app_dirs):
+            if any(f"/{app_dir}/bin/" in content for app_dir in app_dirs):
                 return path
 
         return None

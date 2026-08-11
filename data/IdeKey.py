@@ -6,6 +6,7 @@ IdeKey = Literal[
     "clion",
     "idea",
     "phpstorm",
+    "phpstorm-light",
     "pycharm",
     "rider",
     "webstorm",

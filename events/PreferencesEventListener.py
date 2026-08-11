@@ -30,5 +30,8 @@ class PreferencesEventListener(EventListener):
         if not any((ide_key for ide_key in aliases.values() if ide_key == "rustrover")):
             aliases["rust"] = "rustrover"
 
+        if not any((ide_key for ide_key in aliases.values() if ide_key == "phpstorm-light")):
+            aliases["light"] = "phpstorm-light"
+
         extension.preferences.update(event.preferences)
         extension.set_aliases(aliases)

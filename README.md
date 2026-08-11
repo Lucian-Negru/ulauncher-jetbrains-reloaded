@@ -66,6 +66,7 @@ To install this extension:
 ### Supported IDEs
 
 - PHPStorm
+- PHPStorm Light
 - WebStorm
 - PyCharm
 - IntelliJ IDEA
@@ -84,6 +85,10 @@ following:
 3. Click on the `Tools` dropdown
 4. Check `Generate shell scripts` checkbox
 5. Enter the shell scripts location
+
+> **PHPStorm Light:** Toolbox names its script `phpstorm2` when regular PHPStorm is also
+> installed. Open the tool's settings in Toolbox and set `Shell script name` to `phpstorm-light`,
+> otherwise the extension won't find the launcher.
 
 After that, follow below instructions to configure the extension settings:
 

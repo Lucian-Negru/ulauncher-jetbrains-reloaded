@@ -4,6 +4,8 @@ from __future__ import annotations
 import os
 from typing import List
 
+MAX_SCRIPT_SIZE = 8192
+
 
 # pylint: disable=too-few-public-methods
 class LauncherScripts:
@@ -30,7 +32,9 @@ class LauncherScripts:
     def find_by_app_dir(scripts_path: str, app_dirs: List[str]) -> str | None:
         """
         Finds the launcher script pointing at one of the given Toolbox app directories,
-        which is what tells apart IDEs whose scripts Toolbox had to number
+        which is what tells apart IDEs whose scripts Toolbox had to number.
+        Files too big to be a launcher script are skipped, as the scripts directory
+        may hold unrelated executables
         :param scripts_path: Path to the shell scripts directory
         :param app_dirs: Toolbox app directory names of the IDE
         :return: Path to the launcher script
@@ -41,7 +45,7 @@ class LauncherScripts:
 
         for name in sorted(os.listdir(scripts_path)):
             path = os.path.join(scripts_path, name)
-            if not os.path.isfile(path):
+            if not os.path.isfile(path) or os.path.getsize(path) > MAX_SCRIPT_SIZE:
                 continue
 
             try:

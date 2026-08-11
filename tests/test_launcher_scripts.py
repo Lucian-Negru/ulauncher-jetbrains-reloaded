@@ -2,11 +2,12 @@
 
 # pylint: disable=missing-function-docstring
 
-from utils.LauncherScripts import LauncherScripts
+from utils.LauncherScripts import LauncherScripts, MAX_SCRIPT_SIZE
 
 PHPSTORM_SCRIPT = "phpstorm"
 NUMBERED_SCRIPT = "phpstorm2"
 LIGHT_SCRIPT = "phpstorm-light"
+UNRELATED_BINARY = "aaa-unrelated-binary"
 PHPSTORM_APP_DIR = "phpstorm"
 LIGHT_APP_DIR = "phpstorm-light"
 DEFAULT_APPS_DIR = "/home/user/.local/share/JetBrains/Toolbox/apps"
@@ -52,6 +53,15 @@ def test_finds_the_script_when_the_tools_are_installed_outside_the_default_locat
     scripts = make_scripts_dir(
         tmp_path, {NUMBERED_SCRIPT: LIGHT_APP_DIR}, install_location="/opt/jetbrains"
     )
+
+    found = LauncherScripts.find(scripts, [LIGHT_SCRIPT], [LIGHT_APP_DIR])
+
+    assert found == str(tmp_path / NUMBERED_SCRIPT)
+
+
+def test_skips_files_too_big_to_be_a_launcher_script(tmp_path):
+    scripts = make_scripts_dir(tmp_path, {NUMBERED_SCRIPT: LIGHT_APP_DIR})
+    (tmp_path / UNRELATED_BINARY).write_bytes(b"\0" * (MAX_SCRIPT_SIZE + 1))
 
     found = LauncherScripts.find(scripts, [LIGHT_SCRIPT], [LIGHT_APP_DIR])
 
